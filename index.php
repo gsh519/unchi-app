@@ -93,11 +93,6 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
-  <style>
-    .container {
-      font-family: 'Noto Sans JP', sans-serif;
-    }
-  </style>
 </head>
 
 <body>

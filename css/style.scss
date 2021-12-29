@@ -1,10 +1,12 @@
 @charset 'utf-8';
 
 $mainColor: #ffd31a;
+$subColor: #FFD740;
 $fontColor: #965c04;
 
 body {
   background-color: $mainColor;
+  font-family: 'TsukuARdGothic-Regular',sans-serif;
 }
 
 img {
@@ -38,6 +40,7 @@ th {
   background-color: #fff !important;
 }
 td {
+  cursor: pointer;
   height: 100px;
   background-color: #fff !important;
 }
@@ -57,4 +60,67 @@ th:nth-of-type(7), td:nth-of-type(7) {
 
 .hero {
   margin-bottom: 30px;
+}
+
+.create-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: $fontColor;
+  margin-bottom: 30px;
+}
+
+.unchi-form {
+  background-color: $subColor;
+  border-radius: 15px;
+  padding: 20px;
+  &__ttl {
+    font-size: 16px;
+    color: $fontColor;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+}
+
+  .wrap div {
+  position: relative;
+}
+
+label {
+  color: $fontColor;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  margin-left: 10px;
+  padding: 0 10px;
+  background-color: $subColor;
+  -webkit-transition: top .2s ease-in-out,
+                      font-size .2s ease-in-out;
+  transition: top .2s ease-in-out,
+              font-size .2s ease-in-out;
+}
+
+.active {
+  top: -3px;
+  font-size: 16px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  font-size: 20px;
+  background-color: transparent;
+  color: $fontColor;
+}
+
+input[type=text]:focus {
+  outline: none;
+}
+
+.fa-pen {
+  margin-left: 4px;
 }
