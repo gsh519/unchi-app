@@ -11,6 +11,10 @@ main {
   padding: 30px 0;
 }
 
+::placeholder {
+  color: #965c04;
+}
+
 .wrapper {
   max-width: 940px;
   margin: 0 auto;
@@ -84,7 +88,11 @@ th:nth-of-type(7), td:nth-of-type(7) {
   margin-bottom: 30px;
 }
 
-.wrap div {
+.wrap__area {
+  margin-bottom: 30px;
+}
+
+.wrap__area.comm {
   position: relative;
 }
 
@@ -106,9 +114,10 @@ label {
   font-size: 16px;
 }
 
-input[type=text] {
+.comment-form {
+  max-width: 100%;
   width: 100%;
-  padding: 20px;
+  padding: 16px;
   border: 1px solid #fff;
   border-radius: 15px;
   font-size: 20px;
@@ -116,10 +125,32 @@ input[type=text] {
   color: #965c04;
 }
 
-input[type=text]:focus {
+.comment-form:focus {
   outline: none;
 }
 
 .fa-pen {
   margin-left: 4px;
+}
+
+.status-select {
+  width: 100%;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  padding: 16px;
+  color: #965c04;
+}
+
+.status-select:focus {
+  outline: none;
+}
+
+.amount__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.amount__list li {
+  width: calc(100% / 3);
 }

@@ -93,6 +93,9 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script defer src="./script/active.js"></script>
 </head>
 
 <body>
@@ -122,6 +125,8 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
           ?>
         </table>
       </div>
+    </div>
+  </main>
 </body>
 
 </html>
