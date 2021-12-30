@@ -26,27 +26,27 @@
             <ul class="amount__list">
               <li>
                 <p>ぶりぶりうんち</p>
-                <img src="./images/big_unchi.png" alt="ビッグうんち">
+                <img src="./images/big_unchi.png" alt="ぶりぶりうんち">
               </li>
               <li>
                 <p>ノーマルうんち</p>
-                <img src="./images/normal_unchi.png" alt="ビッグうんち">
+                <img src="./images/normal_unchi.png" alt="ノーマルうんち">
               </li>
               <li>
                 <p>小さめうんち</p>
-                <img src="./images/small_unchi.png" alt="ビッグうんち">
+                <img src="./images/small_unchi.png" alt="小さめうんち">
               </li>
               <li>
                 <p>ころころうんち</p>
-                <img src="./images/corocoro_unchi.png" alt="ビッグうんち">
+                <img src="./images/corocoro_unchi.png" alt="ころころうんち">
               </li>
               <li>
                 <p>下痢うんち</p>
-                <img src="./images/geri_unchi.png" alt="ビッグうんち">
+                <img src="./images/geri_unchi.png" alt="下痢うんち">
               </li>
               <li>
                 <p>でなかった</p>
-                <img src="./images/big_unchi.png" alt="ビッグうんち">
+                <img src="./images/batu.png" alt="でなかった">
               </li>
             </ul>
           </div>
