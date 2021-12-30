@@ -95,7 +95,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script defer src="./script/active.js"></script>
+  <script defer src="./script/script.js"></script>
 </head>
 
 <body>

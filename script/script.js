@@ -10,4 +10,9 @@ $('document').ready(function() {
     }
   });
 
+  $('.item').on('click', function () {
+    $('.item').removeClass('select');
+    $(this).addClass('select');
+  })
+
 })

@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>今日のうんち日記</title>
   <link rel="stylesheet" href="./css/reset.css">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script defer src="./script/active.js"></script>
+  <script defer src="./script/script.js"></script>
 </head>
 
 <body>
@@ -24,27 +24,27 @@
         <form class="wrap" method="post" action="">
           <div class="wrap__area amount">
             <ul class="amount__list">
-              <li>
+              <li class="item">
                 <p>ぶりぶりうんち</p>
                 <img src="./images/big_unchi.png" alt="ぶりぶりうんち">
               </li>
-              <li>
+              <li class="item">
                 <p>ノーマルうんち</p>
                 <img src="./images/normal_unchi.png" alt="ノーマルうんち">
               </li>
-              <li>
+              <li class="item">
                 <p>小さめうんち</p>
                 <img src="./images/small_unchi.png" alt="小さめうんち">
               </li>
-              <li>
+              <li class="item">
                 <p>ころころうんち</p>
                 <img src="./images/corocoro_unchi.png" alt="ころころうんち">
               </li>
-              <li>
+              <li class="item">
                 <p>下痢うんち</p>
                 <img src="./images/geri_unchi.png" alt="下痢うんち">
               </li>
-              <li>
+              <li class="item">
                 <p>でなかった</p>
                 <img src="./images/batu.png" alt="でなかった">
               </li>
