@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>今日のうんち日記</title>
   <link rel="stylesheet" href="./css/reset.css">
-  <link rel="stylesheet" href="./css/style.min.css">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -16,7 +16,7 @@
 
 <body>
   <main>
-    <h1 class="create-title">日記投稿ページ</h1>
+    <h1 class="create-title">日記記録ページ</h1>
 
     <div class="wrapper">
       <div class="unchi-form">
@@ -25,21 +25,27 @@
           <div class="wrap__area amount">
             <ul class="amount__list">
               <li>
+                <p>ぶりぶりうんち</p>
                 <img src="./images/big_unchi.png" alt="ビッグうんち">
               </li>
               <li>
-                <img src="./images/big_unchi.png" alt="ビッグうんち">
+                <p>ノーマルうんち</p>
+                <img src="./images/normal_unchi.png" alt="ビッグうんち">
               </li>
               <li>
-                <img src="./images/big_unchi.png" alt="ビッグうんち">
+                <p>小さめうんち</p>
+                <img src="./images/small_unchi.png" alt="ビッグうんち">
               </li>
               <li>
-                <img src="./images/big_unchi.png" alt="ビッグうんち">
+                <p>ころころうんち</p>
+                <img src="./images/corocoro_unchi.png" alt="ビッグうんち">
               </li>
               <li>
-                <img src="./images/big_unchi.png" alt="ビッグうんち">
+                <p>下痢うんち</p>
+                <img src="./images/geri_unchi.png" alt="ビッグうんち">
               </li>
               <li>
+                <p>でなかった</p>
                 <img src="./images/big_unchi.png" alt="ビッグうんち">
               </li>
             </ul>
@@ -57,6 +63,9 @@
             <label for="comment">自分メモ<i class="fas fa-pen"></i></label>
             <!-- <input name="comment" id="comment" type="text" class="cool" /> -->
             <textarea class="comment-form" name="comment" id="comment"></textarea>
+          </div>
+          <div class="wrap__area submit">
+            <input type="submit" name="btn_submit" value="記録する">
           </div>
         </form>
       </div>
