@@ -11,8 +11,10 @@ $('document').ready(function() {
   });
 
   $('.item').on('click', function () {
+    let index = $('.item').index(this);
     $('.item').removeClass('select');
     $(this).addClass('select');
+    $('.amount-input').attr('value', index);
   })
 
 })

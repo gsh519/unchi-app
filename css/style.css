@@ -184,3 +184,7 @@ label {
   background-color: #965c04;
   color: #fff;
 }
+
+.table td {
+  max-width: 50px;
+}

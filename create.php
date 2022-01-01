@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script defer src="./script/script.js"></script>
+  <script defer src="./script/active.js"></script>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     <div class="wrapper">
       <div class="unchi-form">
         <h2 class="unchi-form__ttl">うんち日記記録フォーム</h2>
-        <form class="wrap" method="post" action="">
+        <form class="wrap" method="post" action="./store.php">
           <div class="wrap__area amount">
             <ul class="amount__list">
               <li class="item">
@@ -49,9 +49,10 @@
                 <img src="./images/batu.png" alt="でなかった">
               </li>
             </ul>
+            <input required class="amount-input" type="hidden" name="amount">
           </div>
           <div class="wrap__area">
-            <select class="status-select" name="status" id="status">
+            <select required class="status-select" name="status" id="status">
               <option value="お腹の状態">お腹の状態</option>
               <option value="スッキリ">スッキリ🥳</option>
               <option value="スッキリしない">スッキリしない😖</option>
@@ -61,7 +62,6 @@
           </div>
           <div class="wrap__area comm">
             <label for="comment">自分メモ<i class="fas fa-pen"></i></label>
-            <!-- <input name="comment" id="comment" type="text" class="cool" /> -->
             <textarea class="comment-form" name="comment" id="comment"></textarea>
           </div>
           <div class="wrap__area submit">
