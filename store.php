@@ -1,6 +1,6 @@
 <?php
 
-var_dump($_POST['date']);
+// var_dump($_POST['date']);
 
 //タイムゾーン設定
 date_default_timezone_set('Asia/Tokyo');
