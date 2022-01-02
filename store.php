@@ -1,5 +1,7 @@
 <?php
 
+var_dump($_POST['date']);
+
 //タイムゾーン設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -38,7 +40,7 @@ if (!empty($submit)) {
 
 if (empty($errors)) {
   //日付を取得
-  $date = date("Y-m-d");
+  $date = $_POST['date'];
 
   $pdo->beginTransaction();
 

@@ -1,6 +1,18 @@
 <?php
 // タイムゾーンを設定
 date_default_timezone_set('Asia/Tokyo');
+$errors = [];
+
+// データーベースに接続
+try {
+  $option = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
+  ];
+  $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root');
+} catch (PDOException $e) {
+  $errors[] = $e->getMessage();
+}
 
 // 前月・次月リンクが押された場合は、GETパラメーターから年月を取得
 if (isset($_GET['ym'])) {
@@ -55,11 +67,41 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   // 2021-06-3
   $date = $ym . '-' . $day;
 
+  if (empty($errors)) {
+    // SQL作成
+    $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date");
+
+    // 値をセット
+    $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+
+    // SQLクエリの実行
+    $stmt->execute();
+
+    // 表示するデータを取得
+    $fetchDate = $stmt->fetch();
+
+    if ($fetchDate['amount'] === 'ぶりぶりうんち') {
+      $img = '<img src="./images/big_unchi.png">';
+    } elseif ($fetchDate['amount'] === 'ノーマルうんち') {
+      $img = '<img src="./images/normal_unchi.png">';
+    } elseif ($fetchDate['amount'] === '小さめうんち') {
+      $img = '<img src="./images/small_unchi.png">';
+    } elseif ($fetchDate['amount'] === 'ころころうんち') {
+      $img = '<img src="./images/corocoro_unchi.png">';
+    } elseif ($fetchDate['amount'] === '下痢うんち') {
+      $img = '<img src="./images/geri_unchi.png">';
+    } elseif ($fetchDate['amount'] === 'でなかった') {
+      $img = '<img src="./images/batu.png">';
+    }
+  }
+
+  $a_href = '<a class="create-diary" href="./create.php?date=' . $date . '"></a>';
+
   if ($today == $date) {
     // 今日の日付の場合は、class="today"をつける
-    $week .= '<td class="today">' . '<p>' . $day . '</p>' . '<p>' . '<img src="./images/big_unchi.png">' . '</p>';
+    $week .= '<td class="today">' . '<p>' . $day . '</p>' . $a_href;
   } else {
-    $week .= '<td>' . '<p>' . $day . '</p>' . '<p>' . '<img src="./images/big_unchi.png">' . '</p>';
+    $week .= '<td>' . '<p>' . $day . '</p>' . $a_href;
   }
   $week .= '</td>';
 
@@ -79,6 +121,10 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
     $week = '';
   }
 }
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -90,7 +136,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <title>今日のうんち日記</title>
   <link rel="stylesheet" href="./css/reset.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.scss">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 

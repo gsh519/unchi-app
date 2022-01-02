@@ -1,3 +1,7 @@
+<?php
+$date = $_GET['date'];
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -67,6 +71,7 @@
           <div class="wrap__area submit">
             <input type="submit" name="btn_submit" value="記録する">
           </div>
+          <input type="hidden" name="date" value="<?php echo $date; ?>">
         </form>
       </div>
     </div>
