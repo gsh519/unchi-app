@@ -92,10 +92,12 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
       $img = '<img src="./images/geri_unchi.png">';
     } elseif ($fetchDate['amount'] === 'でなかった') {
       $img = '<img src="./images/batu.png">';
+    } elseif ($fetchDate['amount'] === null) {
+      $img = '<img>';
     }
   }
 
-  $a_href = '<a class="create-diary" href="./create.php?date=' . $date . '"></a>';
+  $a_href = '<a class="create-diary" href="./create.php?date=' . $date . '">' . $img . '</a>';
 
   if ($today == $date) {
     // 今日の日付の場合は、class="today"をつける
@@ -136,7 +138,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <title>今日のうんち日記</title>
   <link rel="stylesheet" href="./css/reset.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/style.scss">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 

@@ -168,8 +168,23 @@ label {
 }
 
 .submit {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 0;
+}
+
+.submit .to-home {
+  border: 1px solid #965c04;
+  padding: 8px 16px;
+  border-radius: 15px;
+  font-weight: bold;
+  color: #965c04;
+}
+
+.submit .to-home:hover {
+  background-color: #965c04;
+  color: #fff;
 }
 
 .submit input {
@@ -186,7 +201,7 @@ label {
 }
 
 .table td {
-  max-width: 50px;
+  width: 50px;
 }
 
 .create-diary {

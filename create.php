@@ -69,6 +69,7 @@ $date = $_GET['date'];
             <textarea class="comment-form" name="comment" id="comment"></textarea>
           </div>
           <div class="wrap__area submit">
+            <a class="to-home" href="./">Home</a>
             <input type="submit" name="btn_submit" value="記録する">
           </div>
           <input type="hidden" name="date" value="<?php echo $date; ?>">

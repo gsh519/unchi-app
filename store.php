@@ -1,7 +1,5 @@
 <?php
 
-// var_dump($_POST['date']);
-
 //タイムゾーン設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -47,7 +45,7 @@ if (empty($errors)) {
   try {
     $stmt = $pdo->prepare("INSERT INTO diary (date, amount, status, comment) VALUES (:date, :amount, :status, :comment)");
 
-    $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+    $stmt->bindParam(":date", $date, PDO::PARAM_STR);
     $stmt->bindParam(":amount", $amount, PDO::PARAM_STR);
     $stmt->bindParam(":status", $status, PDO::PARAM_STR);
     $stmt->bindParam(":comment", $comment, PDO::PARAM_STR);
