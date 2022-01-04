@@ -1,5 +1,36 @@
 <?php
 $date = $_GET['date'];
+$errors = [];
+
+// データーベースに接続
+try {
+  $option = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
+  ];
+  $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root');
+} catch (PDOException $e) {
+  $errors[] = $e->getMessage();
+}
+
+if (empty($errors)) {
+  // SQL作成
+  $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date ORDER BY id DESC");
+
+  // 値をセット
+  $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+
+  // SQLクエリの実行
+  $stmt->execute();
+
+  // 表示するデータを取得
+  $fetchData = $stmt->fetch();
+}
+
+$amount = $fetchData['amount'];
+$status = $fetchData['status'];
+$comment = $fetchData['comment'];
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +51,7 @@ $date = $_GET['date'];
 
 <body>
   <main>
-    <h1 class="create-title">日記記録ページ</h1>
+    <h1 class="create-title">うんち日記記録ページ</h1>
 
     <div class="wrapper">
       <div class="unchi-form">
@@ -28,27 +59,51 @@ $date = $_GET['date'];
         <form class="wrap" method="post" action="./store.php">
           <div class="wrap__area amount">
             <ul class="amount__list">
-              <li class="item">
+              <li class="item <?php if (!empty($amount)) {
+                                if ($amount === 'ぶりぶりうんち') {
+                                  echo 'select';
+                                }
+                              } ?>">
                 <p>ぶりぶりうんち</p>
                 <img src="./images/big_unchi.png" alt="ぶりぶりうんち">
               </li>
-              <li class="item">
+              <li class="item <?php if (!empty($amount)) {
+                                if ($amount === 'ノーマルうんち') {
+                                  echo 'select';
+                                }
+                              } ?>">
                 <p>ノーマルうんち</p>
                 <img src="./images/normal_unchi.png" alt="ノーマルうんち">
               </li>
-              <li class="item">
+              <li class="item <?php if (!empty($amount)) {
+                                if ($amount === '小さめうんち') {
+                                  echo 'select';
+                                }
+                              } ?>">
                 <p>小さめうんち</p>
                 <img src="./images/small_unchi.png" alt="小さめうんち">
               </li>
-              <li class="item">
+              <li class="item <?php if (!empty($amount)) {
+                                if ($amount === 'ころころうんち') {
+                                  echo 'select';
+                                }
+                              } ?>">
                 <p>ころころうんち</p>
                 <img src="./images/corocoro_unchi.png" alt="ころころうんち">
               </li>
-              <li class="item">
+              <li class="item <?php if (!empty($amount)) {
+                                if ($amount === '下痢うんち') {
+                                  echo 'select';
+                                }
+                              } ?>">
                 <p>下痢うんち</p>
                 <img src="./images/geri_unchi.png" alt="下痢うんち">
               </li>
-              <li class="item">
+              <li class="item <?php if (!empty($amount)) {
+                                if ($amount === 'でなかった') {
+                                  echo 'select';
+                                }
+                              } ?>">
                 <p>でなかった</p>
                 <img src="./images/batu.png" alt="でなかった">
               </li>
@@ -58,15 +113,37 @@ $date = $_GET['date'];
           <div class="wrap__area">
             <select required class="status-select" name="status" id="status">
               <option value="お腹の状態">お腹の状態</option>
-              <option value="スッキリ">スッキリ🥳</option>
-              <option value="スッキリしない">スッキリしない😖</option>
-              <option value="お腹がはってる">お腹がはってる😩</option>
-              <option value="お尻が痛い">お尻が痛い😣</option>
+              <option value="スッキリ" <?php if (!empty($status)) {
+                                      if ($status === "スッキリ") {
+                                        echo 'selected';
+                                      }
+                                    } ?>>スッキリ🥳</option>
+              <option value="スッキリしない" <?php if (!empty($status)) {
+                                        if ($status === "スッキリしない") {
+                                          echo 'selected';
+                                        }
+                                      } ?>>スッキリしない😖</option>
+              <option value="お腹がはってる" <?php if (!empty($status)) {
+                                        if ($status === "お腹がはってる") {
+                                          echo 'selected';
+                                        }
+                                      } ?>>お腹がはってる😩</option>
+              <option value="お尻が痛い" <?php if (!empty($status)) {
+                                      if ($status === "お尻が痛い") {
+                                        echo 'selected';
+                                      }
+                                    } ?>>お尻が痛い😣</option>
             </select>
           </div>
           <div class="wrap__area comm">
-            <label for="comment">自分メモ<i class="fas fa-pen"></i></label>
-            <textarea class="comment-form" name="comment" id="comment"></textarea>
+            <label for="comment" <?php if (!empty($comment)) {
+                                    echo 'class="active"';
+                                  } ?>>自分メモ<i class="fas fa-pen"></i></label>
+            <textarea class="comment-form" name="comment" id="comment"><?php if (!empty($comment)) {
+                                                                          echo $comment;
+                                                                        } else {
+                                                                          echo '';
+                                                                        } ?></textarea>
           </div>
           <div class="wrap__area submit">
             <a class="to-home" href="./">Home</a>

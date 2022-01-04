@@ -7,6 +7,7 @@ $submit = $_POST['btn_submit'];
 $status = $_POST['status'];
 $comment = $_POST['comment'];
 
+
 $errors = [];
 
 if ($_POST['amount'] === "0") {

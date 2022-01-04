@@ -69,7 +69,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
   if (empty($errors)) {
     // SQL作成
-    $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date");
+    $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date ORDER BY id DESC");
 
     // 値をセット
     $stmt->bindValue(':date', $date, PDO::PARAM_STR);
@@ -174,7 +174,6 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
         </table>
       </div>
     </div>
-    <a href="./create.php">作成</a>
   </main>
 </body>
 
