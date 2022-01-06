@@ -1,4 +1,8 @@
 <?php
+$dbName = $_SERVER['DB_NAME'];
+$host = $_SERVER['DB_HOST'];
+$user = $_SERVER['DB_USER'];
+$pass = $_SERVER['DB_PASS'];
 $date = $_GET['date'];
 $errors = [];
 
@@ -8,7 +12,7 @@ try {
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
   ];
-  $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root');
+  $pdo = new PDO('mysql:charset=UTF8;dbname=' . $dbName . ';host=' . $host, $user, $pass, $option);
 } catch (PDOException $e) {
   $errors[] = $e->getMessage();
 }
@@ -147,6 +151,9 @@ $comment = $fetchData['comment'];
           </div>
           <div class="wrap__area submit">
             <a class="to-home" href="./">Home</a>
+            <?php if (!empty($amount) && !empty($status)) : ?>
+              <a href="./delete.php" class="to-home">削除</a>
+            <?php endif; ?>
             <input type="submit" name="btn_submit" value="記録する">
           </div>
           <input type="hidden" name="date" value="<?php echo $date; ?>">

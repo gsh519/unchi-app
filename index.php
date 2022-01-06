@@ -1,4 +1,10 @@
 <?php
+
+$dbName = $_SERVER['DB_NAME'];
+$host = $_SERVER['DB_HOST'];
+$user = $_SERVER['DB_USER'];
+$pass = $_SERVER['DB_PASS'];
+
 // タイムゾーンを設定
 date_default_timezone_set('Asia/Tokyo');
 $errors = [];
@@ -9,7 +15,7 @@ try {
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
   ];
-  $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root');
+  $pdo = new PDO('mysql:charset=UTF8;dbname=' . $dbName . ';host=' . $host, $user, $pass, $option);
 } catch (PDOException $e) {
   $errors[] = $e->getMessage();
 }
@@ -138,7 +144,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <title>今日のうんち日記</title>
   <link rel="stylesheet" href="./css/reset.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 

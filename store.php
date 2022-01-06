@@ -1,5 +1,10 @@
 <?php
 
+$dbName = $_SERVER['DB_NAME'];
+$host = $_SERVER['DB_HOST'];
+$user = $_SERVER['DB_USER'];
+$pass = $_SERVER['DB_PASS'];
+
 //タイムゾーン設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -31,7 +36,7 @@ if (!empty($submit)) {
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
     ];
-    $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root');
+    $pdo = new PDO('mysql:charset=UTF8;dbname=' . $dbName . ';host=' . $host, $user, $pass, $option);
   } catch (PDOException $e) {
     $errors[] = $e->getMessage();
   }
