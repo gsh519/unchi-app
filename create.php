@@ -152,7 +152,7 @@ $comment = $fetchData['comment'];
           <div class="wrap__area submit">
             <a class="to-home" href="./">Home</a>
             <?php if (!empty($amount) && !empty($status)) : ?>
-              <a href="./delete.php" class="to-home">削除</a>
+              <a href="./delete.php?date=<?php echo $date ?>" class="to-home">削除</a>
             <?php endif; ?>
             <input type="submit" name="btn_submit" value="記録する">
           </div>

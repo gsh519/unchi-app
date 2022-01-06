@@ -70,8 +70,6 @@ if (empty($errors)) {
 
   $stmt = null;
 
-  echo '保存に成功しました';
-
   header("Location: ./index.php");
   exit;
 } else {
