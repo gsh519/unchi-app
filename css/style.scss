@@ -1,4 +1,5 @@
 @charset 'utf-8';
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
 $mainColor: #ffd31a;
 $subColor: #FFD740;
@@ -6,7 +7,7 @@ $fontColor: #965c04;
 
 body {
   background-color: $mainColor;
-  font-family: 'TsukuARdGothic-Regular',sans-serif;
+  font-family: 'Caveat', cursive, 'TsukuARdGothic-Regular',sans-serif;
 }
 
 img {
