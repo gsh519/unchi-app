@@ -1,3 +1,56 @@
+<?php
+
+//初期値
+date_default_timezone_set('Asia/Tokyo');
+$errors = [];
+$login = $_POST['login_btn'];
+$user_name = $_POST['user_name'];
+
+if (!empty($login)) {
+  // データーベースに接続
+  try {
+    $option = [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
+    ];
+    // $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
+    $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root', $option);
+  } catch (PDOException $e) {
+    $errors[] = $e->getMessage();
+  }
+
+  if (empty($errors)) {
+    //日付を取得
+    $date = date('Y-m-j');
+
+    // SQL作成
+    $stmt = $pdo->prepare("SELECT * FROM user WHERE user_name = :user_name");
+
+    // 値をセット
+    $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
+
+    // SQLクエリの実行
+    $stmt->execute();
+
+    // 表示するデータを取得
+    $fetchData = $stmt->fetch();
+
+    if (!empty($fetchData)) {
+      header("Location: ./index.php");
+      exit;
+    } else {
+      $errors[] = 'おなまえが違います';
+    }
+  } else {
+    foreach ($errors as $error) {
+      echo $error . '</br>';
+    }
+  }
+}
+
+$pdo = null;
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -34,6 +87,13 @@
             <input type="text" class="login-input" id="name" name="user_name">
           </div>
 
+          <?php if (!empty($errors)) : ?>
+            <ul class="error">
+              <?php foreach ($errors as $error) : ?>
+                <li class="error__message">※<?php echo $error; ?></li>
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
           <!-- ログイン -->
           <div class="wrap_area login">
             <input type="submit" class="login_btn" id="login_btn" name="login_btn" value="ログイン">

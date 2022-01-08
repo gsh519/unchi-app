@@ -271,3 +271,13 @@ label {
 .user_name {
   position: relative;
 }
+
+.error {
+  padding: 0;
+  &__message {
+    color: #ff4646;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}

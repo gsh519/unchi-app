@@ -1,4 +1,61 @@
 <?php
+
+//初期値
+date_default_timezone_set('Asia/Tokyo');
+$errors = [];
+$signup = $_POST['signup_btn'];
+$user_name = $_POST['user_name'];
+
+if (!empty($signup)) {
+  // データーベースに接続
+  try {
+    $option = [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
+    ];
+    // $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
+    $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root', $option);
+  } catch (PDOException $e) {
+    $errors[] = $e->getMessage();
+  }
+
+  if (empty($errors)) {
+    //日付を取得
+    $date = date('Y-m-j');
+
+    $pdo->beginTransaction();
+
+    try {
+      $stmt = $pdo->prepare("INSERT INTO user (user_name, date) VALUES (:user_name, :date)");
+
+      $stmt->bindParam(":user_name", $user_name, PDO::PARAM_STR);
+      $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      $res = $pdo->commit();
+    } catch (Exception $e) {
+      // エラーが発生した時はロールバック
+      $pdo->rollBack();
+    }
+
+    if (!$res) {
+      $errors[] = '記録に失敗しました';
+    }
+
+    $stmt = null;
+
+    header("Location: ./index.php");
+    exit;
+  } else {
+    foreach ($errors as $error) {
+      echo $error . '</br>';
+    }
+  }
+}
+
+$pdo = null;
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -39,7 +96,7 @@
 
           <!-- ログイン -->
           <div class="wrap_area login">
-            <input type="submit" class="login_btn" id="login_btn" name="login_btn" value="作成">
+            <input type="submit" class="login_btn" name="signup_btn" value="作成">
           </div>
         </form>
 

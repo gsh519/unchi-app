@@ -9,13 +9,7 @@ session_start();
 
 //初期値
 date_default_timezone_set('Asia/Tokyo');
-$login = $_POST['login_btn'];
 $errors = [];
-
-// ログインしていなければログイン画面へ遷移
-if (empty($login)) {
-  header("Location: ./login.php");
-}
 
 // データーベースに接続
 try {
