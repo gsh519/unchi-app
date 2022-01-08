@@ -5,9 +5,17 @@
 // define('DB_USER', $_SERVER['DB_USER']);
 // define('DB_PASS', $_SERVER['DB_PASS']);
 
-// タイムゾーンを設定
+session_start();
+
+//初期値
 date_default_timezone_set('Asia/Tokyo');
+$login = $_POST['login_btn'];
 $errors = [];
+
+// ログインしていなければログイン画面へ遷移
+if (empty($login)) {
+  header("Location: ./login.php");
+}
 
 // データーベースに接続
 try {
@@ -150,7 +158,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script defer src="./script/active.js"></script>
+  <script defer src="./script/script.js"></script>
 </head>
 
 <body>

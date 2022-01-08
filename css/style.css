@@ -209,3 +209,66 @@ label {
   width: 100%;
   height: 55%;
 }
+
+.login-form {
+  background-color: #FFD740;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.login-form__comm {
+  text-align: center;
+  color: #965c04;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.login-form__announce {
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.login-form .login-input {
+  max-width: 100%;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  font-size: 16px;
+  background-color: transparent;
+  color: #965c04;
+}
+
+.login-form .login-input:focus {
+  outline: none;
+}
+
+.login-form .login {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.login-form .login_btn {
+  border: 1px solid #965c04;
+  padding: 8px 16px;
+  border-radius: 15px;
+  font-weight: bold;
+  color: #965c04;
+}
+
+.login-form .login_btn:hover {
+  background-color: #965c04;
+  color: #fff;
+}
+
+.login-form .signup {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 16px;
+  color: #a1a1ff;
+}
+
+.user_name {
+  position: relative;
+}

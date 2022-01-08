@@ -1,9 +1,19 @@
 $('document').ready(function() {
-  $('.comment-form').on('click', function() {
+  $('.comment-form').on('focus', function() {
     $(this).parent().find('label').addClass('active');
   })
 
   $('#comment').on('focusout', function() {
+    if (!this.value) {
+      $(this).parent().find('label').removeClass('active');
+    }
+  });
+
+  $('.login-input').on('focus', function () {
+    $(this).parent().find('label').addClass('active');
+  })
+
+  $('.login-input').on('focusout', function() {
     if (!this.value) {
       $(this).parent().find('label').removeClass('active');
     }

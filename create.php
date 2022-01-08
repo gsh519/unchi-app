@@ -51,7 +51,7 @@ $comment = $fetchData['comment'];
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script defer src="./script/active.js"></script>
+  <script defer src="./script/script.js"></script>
 </head>
 
 <body>
