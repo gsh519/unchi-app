@@ -6,6 +6,8 @@
 // define('DB_PASS', $_SERVER['DB_PASS']);
 
 //タイムゾーン設定
+session_start();
+// var_dump($_SESSION['user_id']);
 date_default_timezone_set('Asia/Tokyo');
 
 $submit = $_POST['btn_submit'];
@@ -49,10 +51,12 @@ if (empty($errors)) {
 
   $pdo->beginTransaction();
 
+  // データをDBに追加
   try {
-    $stmt = $pdo->prepare("INSERT INTO diary (date, amount, status, comment) VALUES (:date, :amount, :status, :comment)");
+    $stmt = $pdo->prepare("INSERT INTO diary (date, user_id, amount, status, comment) VALUES (:date, :user_id, :amount, :status, :comment)");
 
     $stmt->bindParam(":date", $date, PDO::PARAM_STR);
+    $stmt->bindValue(":user_id", $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->bindParam(":amount", $amount, PDO::PARAM_STR);
     $stmt->bindParam(":status", $status, PDO::PARAM_STR);
     $stmt->bindParam(":comment", $comment, PDO::PARAM_STR);

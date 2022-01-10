@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 //初期値
 date_default_timezone_set('Asia/Tokyo');
 $errors = [];
@@ -32,6 +34,21 @@ if (!empty($signup)) {
       $stmt->bindValue(":date", $date, PDO::PARAM_STR);
 
       $stmt->execute();
+
+      // SQL作成
+      $stmt = $pdo->prepare("SELECT * FROM user WHERE user_name = :user_name");
+
+      // 値をセット
+      $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
+
+      // SQLクエリの実行
+      $stmt->execute();
+
+      // 表示するデータを取得
+      $fetchData = $stmt->fetch();
+
+      $_SESSION['user_name'] = $fetchData['user_name'];
+      $_SESSION['user_id'] = $fetchData['id'];
 
       $res = $pdo->commit();
     } catch (Exception $e) {

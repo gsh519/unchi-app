@@ -4,6 +4,7 @@
 // define('DB_HOST', $_SERVER['DB_HOST']);
 // define('DB_USER', $_SERVER['DB_USER']);
 // define('DB_PASS', $_SERVER['DB_PASS']);
+session_start();
 $date = $_GET['date'];
 
 // タイムゾーンを設定
@@ -26,9 +27,10 @@ if (empty($errors)) {
   $pdo->beginTransaction();
 
   try {
-    $stmt = $pdo->prepare("DELETE FROM diary WHERE date = :date");
+    $stmt = $pdo->prepare("DELETE FROM diary WHERE date = :date AND user_id = :user_id");
 
     $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+    $stmt->bindValue(":user_id", $_SESSION['user_id'], PDO::PARAM_INT);
 
     $stmt->execute();
 

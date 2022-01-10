@@ -3,8 +3,17 @@
 // define('DB_HOST', $_SERVER['DB_HOST']);
 // define('DB_USER', $_SERVER['DB_USER']);
 // define('DB_PASS', $_SERVER['DB_PASS']);
+
+session_start();
 $date = $_GET['date'];
 $errors = [];
+
+// if (!empty($_SESSION['user_name'])) {
+//   echo $_SESSION['user_name'];
+//   echo $_SESSION['user_id'];
+// } else {
+//   echo 'ないです';
+// }
 
 // データーベースに接続
 try {
@@ -20,10 +29,11 @@ try {
 
 if (empty($errors)) {
   // SQL作成
-  $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date ORDER BY id DESC");
+  $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date AND user_id = :user_id ORDER BY id DESC");
 
   // 値をセット
   $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+  $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
   // SQLクエリの実行
   $stmt->execute();

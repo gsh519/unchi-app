@@ -37,7 +37,8 @@ if (!empty($login)) {
     // 表示するデータを取得
     $fetchData = $stmt->fetch();
 
-    $_SESSION['user_name'] = $user_name;
+    $_SESSION['user_name'] = $fetchData['user_name'];
+    $_SESSION['user_id'] = $fetchData['id'];
 
     if (!empty($fetchData)) {
       header("Location: ./");

@@ -7,6 +7,7 @@
 
 session_start();
 
+// セッションにおなまえが記録されていなければログインページに遷移
 if (empty($_SESSION['user_name'])) {
   header("Location: ./login.php");
 }
@@ -82,10 +83,11 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
   if (empty($errors)) {
     // SQL作成
-    $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date ORDER BY id DESC");
+    $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date AND user_id = :user_id ORDER BY id DESC");
 
     // 値をセット
     $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+    $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
     // SQLクエリの実行
     $stmt->execute();
