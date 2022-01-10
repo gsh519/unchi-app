@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 //初期値
 date_default_timezone_set('Asia/Tokyo');
 $errors = [];
@@ -35,8 +37,10 @@ if (!empty($login)) {
     // 表示するデータを取得
     $fetchData = $stmt->fetch();
 
+    $_SESSION['user_name'] = $user_name;
+
     if (!empty($fetchData)) {
-      header("Location: ./index.php");
+      header("Location: ./");
       exit;
     } else {
       $errors[] = 'おなまえが違います';
@@ -83,8 +87,12 @@ $pdo = null;
         <form action="" method="POST">
           <!-- おなまえ -->
           <div class="wrap_area user_name">
-            <label for="name">おなまえ</label>
-            <input type="text" class="login-input" id="name" name="user_name">
+            <label for="name" class="<?php if (!empty($user_name)) {
+                                        echo 'active';
+                                      } ?>">おなまえ</label>
+            <input type="text" class="login-input" id="name" name="user_name" value="<?php if (!empty($user_name)) {
+                                                                                        echo $user_name;
+                                                                                      } ?>">
           </div>
 
           <?php if (!empty($errors)) : ?>

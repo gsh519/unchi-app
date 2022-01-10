@@ -283,3 +283,7 @@ label {
   margin-top: 10px;
   text-align: center;
 }
+
+.logout {
+  text-align: right;
+}

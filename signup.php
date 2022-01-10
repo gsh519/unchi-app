@@ -39,14 +39,14 @@ if (!empty($signup)) {
       $pdo->rollBack();
     }
 
-    if (!$res) {
-      $errors[] = '記録に失敗しました';
+    if ($res) {
+      header("Location: ./");
+      exit;
+    } else {
+      $errors[] = 'おなまえが他の人とかぶってます!!';
     }
 
     $stmt = null;
-
-    header("Location: ./index.php");
-    exit;
   } else {
     foreach ($errors as $error) {
       echo $error . '</br>';
@@ -89,10 +89,21 @@ $pdo = null;
         <form action="" method="POST">
           <!-- おなまえ -->
           <div class="wrap_area user_name">
-            <label for="name">おなまえ</label>
-            <input type="text" class="login-input" id="name" name="user_name">
+            <label for="name" class="<?php if (!empty($user_name)) {
+                                        echo 'active';
+                                      } ?>">おなまえ</label>
+            <input type="text" class="login-input" id="name" name="user_name" value="<?php if (!empty($user_name)) {
+                                                                                        echo $user_name;
+                                                                                      } ?>">
           </div>
           <p class="login-form__announce">※おなまえは他の人と違うものにしてください</p>
+          <?php if (!empty($errors)) : ?>
+            <ul class="error">
+              <?php foreach ($errors as $error) : ?>
+                <li class="error__message"><?php echo $error; ?></li>
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
 
           <!-- ログイン -->
           <div class="wrap_area login">

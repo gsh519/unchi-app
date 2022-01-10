@@ -7,6 +7,10 @@
 
 session_start();
 
+if (empty($_SESSION['user_name'])) {
+  header("Location: ./login.php");
+}
+
 //初期値
 date_default_timezone_set('Asia/Tokyo');
 $errors = [];
@@ -147,7 +151,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   <title>今日のうんち日記</title>
   <link rel="stylesheet" href="./css/reset.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/style.min.css">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 
@@ -182,6 +186,14 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
           ?>
         </table>
       </div>
+    </div>
+
+    <div class="logout-area">
+      <form action="./logout.php" method="POST">
+        <div class="wrap_area logout">
+          <input type="submit" class="login_btn" name="logout_btn" value="ログアウト">
+        </div>
+      </form>
     </div>
   </main>
 </body>
