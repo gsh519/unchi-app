@@ -1,5 +1,10 @@
 <?php
 
+define('DB_NAME', $_SERVER['DB_NAME']);
+define('DB_HOST', $_SERVER['DB_HOST']);
+define('DB_USER', $_SERVER['DB_USER']);
+define('DB_PASS', $_SERVER['DB_PASS']);
+
 session_start();
 
 //初期値
@@ -15,8 +20,7 @@ if (!empty($login)) {
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
     ];
-    // $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
-    $pdo = new PDO('mysql:charset=UTF8;dbname=unchi;host=localhost', 'root', 'root', $option);
+    $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
   } catch (PDOException $e) {
     $errors[] = $e->getMessage();
   }
