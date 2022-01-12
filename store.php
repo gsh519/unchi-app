@@ -1,5 +1,7 @@
 <?php
 
+require_once("./function.php");
+
 define('DB_NAME', $_SERVER['DB_NAME']);
 define('DB_HOST', $_SERVER['DB_HOST']);
 define('DB_USER', $_SERVER['DB_USER']);
@@ -34,11 +36,7 @@ if ($_POST['amount'] === "0") {
 if (!empty($submit)) {
   // データーベースに接続
   try {
-    $option = [
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
-    ];
-    $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
+    db_connect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
   } catch (PDOException $e) {
     $errors[] = $e->getMessage();
   }

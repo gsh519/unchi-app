@@ -1,4 +1,7 @@
 <?php
+
+require_once("./function.php");
+
 define('DB_NAME', $_SERVER['DB_NAME']);
 define('DB_HOST', $_SERVER['DB_HOST']);
 define('DB_USER', $_SERVER['DB_USER']);
@@ -10,11 +13,7 @@ $errors = [];
 
 // データーベースに接続
 try {
-  $option = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
-  ];
-  $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
+  db_connect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 } catch (PDOException $e) {
   $errors[] = $e->getMessage();
 }
@@ -58,11 +57,11 @@ $comment = $fetchData['comment'];
 
 <body>
   <main>
-    <h1 class="create-title">うんち日記記録ページ</h1>
+    <h1 class="create-title">うんち日記</h1>
 
     <div class="wrapper">
       <div class="unchi-form">
-        <h2 class="unchi-form__ttl">うんち日記記録フォーム</h2>
+        <h2 class="unchi-form__ttl">記録フォーム</h2>
         <form class="wrap" method="post" action="./store.php">
           <div class="wrap__area amount">
             <ul class="amount__list">

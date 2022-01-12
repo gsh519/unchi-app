@@ -1,10 +1,13 @@
 <?php
 
+require_once("./function.php");
+
 define('DB_NAME', $_SERVER['DB_NAME']);
 define('DB_HOST', $_SERVER['DB_HOST']);
 define('DB_USER', $_SERVER['DB_USER']);
 define('DB_PASS', $_SERVER['DB_PASS']);
 
+// セッション開始
 session_start();
 
 // セッションにおなまえが記録されていなければログインページに遷移
@@ -18,11 +21,7 @@ $errors = [];
 
 // データーベースに接続
 try {
-  $option = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
-  ];
-  $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
+  db_connect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 } catch (PDOException $e) {
   $errors[] = $e->getMessage();
 }
@@ -53,18 +52,11 @@ $html_title = date('Y年n月', $timestamp);
 $prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) - 1, 1, date('Y', $timestamp)));
 $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) + 1, 1, date('Y', $timestamp)));
 
-// 方法２：strtotimeを使う
-// $prev = date('Y-m', strtotime('-1 month', $timestamp));
-// $next = date('Y-m', strtotime('+1 month', $timestamp));
-
 // 該当月の日数を取得
 $day_count = date('t', $timestamp);
 
 // １日が何曜日か　0:日 1:月 2:火 ... 6:土
-// 方法１：mktimeを使う
 $youbi = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
-// 方法２
-// $youbi = date('w', $timestamp);
 
 
 // カレンダー作成の準備
@@ -72,12 +64,10 @@ $weeks = [];
 $week = '';
 
 // 第１週目：空のセルを追加
-// 例）１日が火曜日だった場合、日・月曜日の２つ分の空セルを追加する
 $week .= str_repeat('<td></td>', $youbi);
 
 for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
-  // 2021-06-3
   $date = $ym . '-' . $day;
 
   if (empty($errors)) {
@@ -126,7 +116,6 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
     if ($day == $day_count) {
       // 月の最終日の場合、空セルを追加
-      // 例）最終日が水曜日の場合、木・金・土曜日の空セルを追加
       $week .= str_repeat('<td></td>', 6 - $youbi % 7);
     }
 
@@ -163,9 +152,11 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 <body>
   <main>
     <div class="hero">
-      <h1 class="hero__ttl">
-        <img src="./images/logo.png" alt="今日のうんち日記">
-      </h1>
+      <div class="wrapper">
+        <h1 class="hero__ttl">
+          <img src="./images/logo.png" alt="今日のうんち日記">
+        </h1>
+      </div>
     </div>
     <div class="calendar">
       <div class="container">
