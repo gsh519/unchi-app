@@ -18,6 +18,7 @@ try {
   db_connect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 } catch (PDOException $e) {
   $errors[] = $e->getMessage();
+  exit;
 }
 
 if (empty($errors)) {

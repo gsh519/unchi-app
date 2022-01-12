@@ -24,6 +24,7 @@ try {
   db_connect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 } catch (PDOException $e) {
   $errors[] = $e->getMessage();
+  exit;
 }
 
 // 前月・次月リンクが押された場合は、GETパラメーターから年月を取得
