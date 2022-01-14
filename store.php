@@ -1,5 +1,7 @@
 <?php
 
+require_once("./function.php");
+
 define('DB_NAME', $_SERVER['DB_NAME']);
 define('DB_HOST', $_SERVER['DB_HOST']);
 define('DB_USER', $_SERVER['DB_USER']);
@@ -7,41 +9,34 @@ define('DB_PASS', $_SERVER['DB_PASS']);
 
 //タイムゾーン設定
 session_start();
-// var_dump($_SESSION['user_id']);
 date_default_timezone_set('Asia/Tokyo');
 
 $submit = $_POST['btn_submit'];
 $status = $_POST['status'];
 $comment = $_POST['comment'];
+$amount_int = (int)$_POST['amount'];
 
 
 $errors = [];
 
-if ($_POST['amount'] === "0") {
+if ($amount_int === 0) {
   $amount = 'ぶりぶりうんち';
-} elseif ($_POST['amount'] === "1") {
+} elseif ($amount_int === 1) {
   $amount = 'ノーマルうんち';
-} elseif ($_POST['amount'] === "2") {
+} elseif ($amount_int === 2) {
   $amount = '小さめうんち';
-} elseif ($_POST['amount'] === "3") {
+} elseif ($amount_int === 3) {
   $amount = 'ころころうんち';
-} elseif ($_POST['amount'] === "4") {
+} elseif ($amount_int === 4) {
   $amount = '下痢うんち';
-} elseif ($_POST['amount'] === "5") {
+} elseif ($amount_int === 5) {
   $amount = 'でなかった';
 }
 
 if (!empty($submit)) {
-  // データーベースに接続
-  try {
-    $option = [
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
-    ];
-    $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
-  } catch (PDOException $e) {
-    $errors[] = $e->getMessage();
-  }
+  // DB接続
+  $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+  // $pdo = dbConnect("unchi", "localhost", "root", "root");
 }
 
 if (empty($errors)) {
@@ -51,8 +46,10 @@ if (empty($errors)) {
   $pdo->beginTransaction();
 
   // データをDBに追加
+  $sql = "INSERT INTO diary (date, user_id, amount, status, comment) VALUES (:date, :user_id, :amount, :status, :comment)";
+
   try {
-    $stmt = $pdo->prepare("INSERT INTO diary (date, user_id, amount, status, comment) VALUES (:date, :user_id, :amount, :status, :comment)");
+    $stmt = $pdo->prepare($sql);
 
     $stmt->bindParam(":date", $date, PDO::PARAM_STR);
     $stmt->bindValue(":user_id", $_SESSION['user_id'], PDO::PARAM_INT);

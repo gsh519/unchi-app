@@ -1,5 +1,7 @@
 <?php
 
+require_once("./function.php");
+
 define('DB_NAME', $_SERVER['DB_NAME']);
 define('DB_HOST', $_SERVER['DB_HOST']);
 define('DB_USER', $_SERVER['DB_USER']);
@@ -14,23 +16,18 @@ $login = $_POST['login_btn'];
 $user_name = $_POST['user_name'];
 
 if (!empty($login)) {
-  // データーベースに接続
-  try {
-    $option = [
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
-    ];
-    $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
-  } catch (PDOException $e) {
-    $errors[] = $e->getMessage();
-  }
+  // DB接続
+  // $pdo = dbConnect("unchi", "localhost", "root", "root");
+  $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
   if (empty($errors)) {
     //日付を取得
     $date = date('Y-m-j');
 
+    $sql = "SELECT * FROM user WHERE user_name = :user_name";
+
     // SQL作成
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE user_name = :user_name");
+    $stmt = $pdo->prepare($sql);
 
     // 値をセット
     $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
@@ -39,12 +36,12 @@ if (!empty($login)) {
     $stmt->execute();
 
     // 表示するデータを取得
-    $fetchData = $stmt->fetch();
+    $user_data = $stmt->fetch();
 
-    $_SESSION['user_name'] = $fetchData['user_name'];
-    $_SESSION['user_id'] = $fetchData['id'];
+    $_SESSION['user_name'] = $user_data['user_name'];
+    $_SESSION['user_id'] = $user_data['id'];
 
-    if (!empty($fetchData)) {
+    if (!empty($user_data)) {
       header("Location: ./");
       exit;
     } else {

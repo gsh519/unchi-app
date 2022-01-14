@@ -1,5 +1,7 @@
 <?php
 
+require_once("./function.php");
+
 define('DB_NAME', $_SERVER['DB_NAME']);
 define('DB_HOST', $_SERVER['DB_HOST']);
 define('DB_USER', $_SERVER['DB_USER']);
@@ -17,16 +19,10 @@ if (empty($_SESSION['user_name'])) {
 date_default_timezone_set('Asia/Tokyo');
 $errors = [];
 
-// データーベースに接続
-try {
-  $option = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
-  ];
-  $pdo = new PDO('mysql:charset=UTF8;dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS, $option);
-} catch (PDOException $e) {
-  $errors[] = $e->getMessage();
-}
+// DB接続
+// $pdo = dbConnect("unchi", "localhost", "root", "root");
+$pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+
 
 // 前月・次月リンクが押された場合は、GETパラメーターから年月を取得
 if (isset($_GET['ym'])) {
@@ -43,14 +39,13 @@ if ($timestamp === false) {
   $timestamp = strtotime($ym . '-01');
 }
 
-// 今日の日付 フォーマット　例）2021-06-3
+// 今日の日付 フォーマット
 $today = date('Y-m-j');
 
-// カレンダーのタイトルを作成　例）2021年6月
+// カレンダーのタイトルを作成
 $html_title = date('Y年n月', $timestamp);
 
 // 前月・次月の年月を取得
-// 方法１：mktimeを使う mktime(hour,minute,second,month,day,year)
 $prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) - 1, 1, date('Y', $timestamp)));
 $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) + 1, 1, date('Y', $timestamp)));
 
@@ -73,32 +68,22 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
   $date = $ym . '-' . $day;
 
   if (empty($errors)) {
-    // SQL作成
-    $stmt = $pdo->prepare("SELECT * FROM diary WHERE date = :date AND user_id = :user_id ORDER BY id DESC");
 
-    // 値をセット
-    $stmt->bindValue(':date', $date, PDO::PARAM_STR);
-    $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $diary = getDiary($pdo, $date, $_SESSION['user_id']);
 
-    // SQLクエリの実行
-    $stmt->execute();
-
-    // 表示するデータを取得
-    $fetchDate = $stmt->fetch();
-
-    if ($fetchDate['amount'] === 'ぶりぶりうんち') {
+    if ($diary['amount'] === 'ぶりぶりうんち') {
       $img = '<img src="./images/big_unchi.png">';
-    } elseif ($fetchDate['amount'] === 'ノーマルうんち') {
+    } elseif ($diary['amount'] === 'ノーマルうんち') {
       $img = '<img src="./images/normal_unchi.png">';
-    } elseif ($fetchDate['amount'] === '小さめうんち') {
+    } elseif ($diary['amount'] === '小さめうんち') {
       $img = '<img src="./images/small_unchi.png">';
-    } elseif ($fetchDate['amount'] === 'ころころうんち') {
+    } elseif ($diary['amount'] === 'ころころうんち') {
       $img = '<img src="./images/corocoro_unchi.png">';
-    } elseif ($fetchDate['amount'] === '下痢うんち') {
+    } elseif ($diary['amount'] === '下痢うんち') {
       $img = '<img src="./images/geri_unchi.png">';
-    } elseif ($fetchDate['amount'] === 'でなかった') {
+    } elseif ($diary['amount'] === 'でなかった') {
       $img = '<img src="./images/batu.png">';
-    } elseif ($fetchDate['amount'] === null) {
+    } elseif ($diary['amount'] === null) {
       $img = '<img>';
     }
   }
@@ -128,9 +113,6 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
     $week = '';
   }
 }
-
-
-
 
 ?>
 <!DOCTYPE html>
