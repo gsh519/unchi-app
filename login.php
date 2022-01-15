@@ -2,10 +2,10 @@
 
 require_once("./function.php");
 
-define('DB_NAME', $_SERVER['DB_NAME']);
-define('DB_HOST', $_SERVER['DB_HOST']);
-define('DB_USER', $_SERVER['DB_USER']);
-define('DB_PASS', $_SERVER['DB_PASS']);
+// define('DB_NAME', $_SERVER['DB_NAME']);
+// define('DB_HOST', $_SERVER['DB_HOST']);
+// define('DB_USER', $_SERVER['DB_USER']);
+// define('DB_PASS', $_SERVER['DB_PASS']);
 
 session_start();
 
@@ -14,11 +14,12 @@ date_default_timezone_set('Asia/Tokyo');
 $errors = [];
 $login = $_POST['login_btn'];
 $user_name = $_POST['user_name'];
+$dbc = new Dbc();
 
 if (!empty($login)) {
   // DB接続
-  // $pdo = dbConnect("unchi", "localhost", "root", "root");
-  $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+  $pdo = $dbc->dbConnect("unchi", "localhost", "root", "root");
+  // $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
   if (empty($errors)) {
     //日付を取得

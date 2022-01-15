@@ -2,10 +2,10 @@
 
 require_once("./function.php");
 
-define('DB_NAME', $_SERVER['DB_NAME']);
-define('DB_HOST', $_SERVER['DB_HOST']);
-define('DB_USER', $_SERVER['DB_USER']);
-define('DB_PASS', $_SERVER['DB_PASS']);
+// define('DB_NAME', $_SERVER['DB_NAME']);
+// define('DB_HOST', $_SERVER['DB_HOST']);
+// define('DB_USER', $_SERVER['DB_USER']);
+// define('DB_PASS', $_SERVER['DB_PASS']);
 
 // セッション開始
 session_start();
@@ -18,10 +18,11 @@ if (empty($_SESSION['user_name'])) {
 //初期値
 date_default_timezone_set('Asia/Tokyo');
 $errors = [];
+$dbc = new Dbc();
 
 // DB接続
-// $pdo = dbConnect("unchi", "localhost", "root", "root");
-$pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+$pdo = $dbc->dbConnect("unchi", "localhost", "root", "root");
+// $pdo = $dbc->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 
 // 前月・次月リンクが押された場合は、GETパラメーターから年月を取得
@@ -69,7 +70,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
   if (empty($errors)) {
 
-    $diary = getDiary($pdo, $date, $_SESSION['user_id']);
+    $diary = $dbc->getDiary($pdo, $date, $_SESSION['user_id']);
 
     if ($diary['amount'] === 'ぶりぶりうんち') {
       $img = '<img src="./images/big_unchi.png">';

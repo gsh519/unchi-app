@@ -2,14 +2,15 @@
 
 require_once("./function.php");
 
-define('DB_NAME', $_SERVER['DB_NAME']);
-define('DB_HOST', $_SERVER['DB_HOST']);
-define('DB_USER', $_SERVER['DB_USER']);
-define('DB_PASS', $_SERVER['DB_PASS']);
+// define('DB_NAME', $_SERVER['DB_NAME']);
+// define('DB_HOST', $_SERVER['DB_HOST']);
+// define('DB_USER', $_SERVER['DB_USER']);
+// define('DB_PASS', $_SERVER['DB_PASS']);
 
 //タイムゾーン設定
 session_start();
 date_default_timezone_set('Asia/Tokyo');
+$dbc = new Dbc();
 
 $submit = $_POST['btn_submit'];
 $status = $_POST['status'];
@@ -35,8 +36,8 @@ if ($amount_int === 0) {
 
 if (!empty($submit)) {
   // DB接続
-  $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
-  // $pdo = dbConnect("unchi", "localhost", "root", "root");
+  // $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+  $pdo = $dbc->dbConnect("unchi", "localhost", "root", "root");
 }
 
 if (empty($errors)) {

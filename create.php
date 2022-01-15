@@ -2,21 +2,22 @@
 
 require_once("./function.php");
 
-define('DB_NAME', $_SERVER['DB_NAME']);
-define('DB_HOST', $_SERVER['DB_HOST']);
-define('DB_USER', $_SERVER['DB_USER']);
-define('DB_PASS', $_SERVER['DB_PASS']);
+// define('DB_NAME', $_SERVER['DB_NAME']);
+// define('DB_HOST', $_SERVER['DB_HOST']);
+// define('DB_USER', $_SERVER['DB_USER']);
+// define('DB_PASS', $_SERVER['DB_PASS']);
 
 session_start();
 $date = $_GET['date'];
 $errors = [];
+$dbc = new Dbc();
 
 // DB接続
-// $pdo = dbConnect("unchi", "localhost", "root", "root");
-$pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+$pdo = $dbc->dbConnect("unchi", "localhost", "root", "root");
+// $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 if (empty($errors)) {
-  $diary = getDiary($pdo, $date, $_SESSION['user_id']);
+  $diary = $dbc->getDiary($pdo, $date, $_SESSION['user_id']);
 }
 
 $amount = $diary['amount'];
