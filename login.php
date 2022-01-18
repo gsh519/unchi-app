@@ -1,43 +1,19 @@
 <?php
 
-require_once("./function.php");
-
-// define('DB_NAME', $_SERVER['DB_NAME']);
-// define('DB_HOST', $_SERVER['DB_HOST']);
-// define('DB_USER', $_SERVER['DB_USER']);
-// define('DB_PASS', $_SERVER['DB_PASS']);
-
-session_start();
+require_once("./user.php");
 
 //初期値
+session_start();
 date_default_timezone_set('Asia/Tokyo');
-$errors = [];
+$error = '';
 $login = $_POST['login_btn'];
 $user_name = $_POST['user_name'];
-$dbc = new Dbc();
+$user = new User();
 
 if (!empty($login)) {
-  // DB接続
-  $pdo = $dbc->dbConnect("unchi", "localhost", "root", "root");
-  // $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
-
   if (empty($errors)) {
-    //日付を取得
-    $date = date('Y-m-j');
 
-    $sql = "SELECT * FROM user WHERE user_name = :user_name";
-
-    // SQL作成
-    $stmt = $pdo->prepare($sql);
-
-    // 値をセット
-    $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
-
-    // SQLクエリの実行
-    $stmt->execute();
-
-    // 表示するデータを取得
-    $user_data = $stmt->fetch();
+    $user_data = $user->login($pdo, $user_name);
 
     $_SESSION['user_name'] = $user_data['user_name'];
     $_SESSION['user_id'] = $user_data['id'];
@@ -46,16 +22,10 @@ if (!empty($login)) {
       header("Location: ./");
       exit;
     } else {
-      $errors[] = 'おなまえが違います';
-    }
-  } else {
-    foreach ($errors as $error) {
-      echo $error . '</br>';
+      $error = 'おなまえが違います';
     }
   }
 }
-
-$pdo = null;
 
 ?>
 <!DOCTYPE html>
@@ -100,9 +70,9 @@ $pdo = null;
 
           <?php if (!empty($errors)) : ?>
             <ul class="error">
-              <?php foreach ($errors as $error) : ?>
+              <?php if ($error) : ?>
                 <li class="error__message">※<?php echo $error; ?></li>
-              <?php endforeach; ?>
+              <?php endif; ?>
             </ul>
           <?php endif; ?>
           <!-- ログイン -->

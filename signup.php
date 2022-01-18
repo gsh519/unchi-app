@@ -1,74 +1,28 @@
 <?php
 
-require_once("./function.php");
-
-// define('DB_NAME', $_SERVER['DB_NAME']);
-// define('DB_HOST', $_SERVER['DB_HOST']);
-// define('DB_USER', $_SERVER['DB_USER']);
-// define('DB_PASS', $_SERVER['DB_PASS']);
+require_once("./user.php");
 
 session_start();
 
 //初期値
 date_default_timezone_set('Asia/Tokyo');
-$errors = [];
+$error = '';
 $signup = $_POST['signup_btn'];
 $user_name = $_POST['user_name'];
-$dbc = new Dbc();
+$user = new User();
 
 if (!empty($signup)) {
-  // DB接続
-  // $pdo = dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
-  $pdo = $dbc->dbConnect("unchi", "localhost", "root", "root");
 
-  if (empty($errors)) {
-    //日付を取得
-    $date = date('Y-m-j');
+  $res = $user->signup($pdo, $user_name);
 
-    $pdo->beginTransaction();
-
-    try {
-      $stmt = $pdo->prepare("INSERT INTO user (user_name, date) VALUES (:user_name, :date)");
-
-      $stmt->bindParam(":user_name", $user_name, PDO::PARAM_STR);
-      $stmt->bindValue(":date", $date, PDO::PARAM_STR);
-
-      $stmt->execute();
-
-      // SQL作成
-      $stmt = $pdo->prepare("SELECT * FROM user WHERE user_name = :user_name");
-
-      // 値をセット
-      $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
-
-      // SQLクエリの実行
-      $stmt->execute();
-
-      // 表示するデータを取得
-      $fetchData = $stmt->fetch();
-
-      $_SESSION['user_name'] = $fetchData['user_name'];
-      $_SESSION['user_id'] = $fetchData['id'];
-
-      $res = $pdo->commit();
-    } catch (Exception $e) {
-      // エラーが発生した時はロールバック
-      $pdo->rollBack();
-    }
-
-    if ($res) {
-      header("Location: ./");
-      exit;
-    } else {
-      $errors[] = 'おなまえが他の人とかぶってます!!';
-    }
-
-    $stmt = null;
+  if ($res) {
+    header("Location: ./");
+    exit;
   } else {
-    foreach ($errors as $error) {
-      echo $error . '</br>';
-    }
+    $error = 'おなまえが他の人とかぶってます!!';
   }
+
+  $stmt = null;
 }
 
 $pdo = null;
@@ -116,9 +70,9 @@ $pdo = null;
           <p class="login-form__announce">※おなまえは他の人と違うものにしてください</p>
           <?php if (!empty($errors)) : ?>
             <ul class="error">
-              <?php foreach ($errors as $error) : ?>
+              <?php if ($error) : ?>
                 <li class="error__message"><?php echo $error; ?></li>
-              <?php endforeach; ?>
+              <?php endif; ?>
             </ul>
           <?php endif; ?>
 
