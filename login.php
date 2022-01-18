@@ -11,19 +11,16 @@ $user_name = $_POST['user_name'];
 $user = new User();
 
 if (!empty($login)) {
-  if (empty($errors)) {
+  $user_data = $user->login($user_name);
 
-    $user_data = $user->login($pdo, $user_name);
+  $_SESSION['user_name'] = $user_data['user_name'];
+  $_SESSION['user_id'] = $user_data['id'];
 
-    $_SESSION['user_name'] = $user_data['user_name'];
-    $_SESSION['user_id'] = $user_data['id'];
-
-    if (!empty($user_data)) {
-      header("Location: ./");
-      exit;
-    } else {
-      $error = 'おなまえが違います';
-    }
+  if (!empty($user_data)) {
+    header("Location: ./");
+    exit;
+  } else {
+    $error = 'おなまえが違います';
   }
 }
 

@@ -9,7 +9,7 @@ $user = new User();
 
 
 if (empty($errors)) {
-  $diary = $user->getDiary($pdo, $date, $_SESSION['user_id']);
+  $diary = $user->getDiary($date, $_SESSION['user_id']);
 }
 
 $amount = $diary['amount'];

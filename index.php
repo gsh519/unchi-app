@@ -61,7 +61,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
   if (empty($errors)) {
 
-    $diary = $user->getDiary($pdo, $date, $_SESSION['user_id']);
+    $diary = $user->getDiary($date, $_SESSION['user_id']);
 
     if ($diary['amount'] === 'ぶりぶりうんち') {
       $img = '<img src="./images/big_unchi.png">';

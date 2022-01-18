@@ -10,7 +10,7 @@ $error = '';
 $user = new User();
 
 // 投稿削除処理実行
-$res = $user->deleteDiary($pdo, $date, $_SESSION['user_id']);
+$res = $user->deleteDiary($date, $_SESSION['user_id']);
 
 // 削除処理にエラーがあればエラー表示
 if (!$res) {

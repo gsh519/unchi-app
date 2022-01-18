@@ -30,7 +30,7 @@ if ($amount_int === 0) {
 }
 
 if (!empty($submit)) {
-  $res = $user->storeDiary($pdo, $amount, $status, $comment);
+  $res = $user->storeDiary($amount, $status, $comment);
 
   if (!$res) {
     $error = '記録に失敗しました';

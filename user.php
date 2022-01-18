@@ -16,7 +16,7 @@ class User
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
       ];
-      $pdo = new PDO('mysql:charset=UTF8;dbname=' . $db_name . ';host=' . $db_host, $db_user, $db_pass, $option);
+      $pdo = new PDO("mysql:charset=UTF8;dbname=$db_name;host=$db_host", $db_user, $db_pass, $option);
       return $pdo;
     } catch (PDOException $e) {
       $errors[] = $e->getMessage();
@@ -24,7 +24,7 @@ class User
   }
 
   // ログイン
-  public function login($pdo, $user_name)
+  public function login($user_name)
   {
     // DB接続
     $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
@@ -50,11 +50,10 @@ class User
   }
 
   // サインアップ
-  public function signup($pdo, $user_name)
+  public function signup($user_name)
   {
     // DB接続
-    $pdo = $this->dbConnect("unchi", "localhost", "root", "root");
-    // $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+    $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
     //日付を取得
     $date = date('Y-m-j');
@@ -94,12 +93,11 @@ class User
   }
 
   //日記情報取得
-  public function getDiary($pdo, $date, $user_id)
+  public function getDiary($date, $user_id)
   {
 
     // DB接続
-    $pdo = $this->dbConnect("unchi", "localhost", "root", "root");
-    // $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+    $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
     $sql = "SELECT * FROM diary WHERE date = :date AND user_id = :user_id ORDER BY id DESC";
 
@@ -119,11 +117,10 @@ class User
   }
 
   // 日記保存
-  function storeDiary($pdo, $amount, $status, $comment)
+  function storeDiary($amount, $status, $comment)
   {
     // DB接続
-    $pdo = $this->dbConnect("unchi", "localhost", "root", "root");
-    // $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+    $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
     //日付を取得
     $date = $_POST['date'];
@@ -154,12 +151,11 @@ class User
   }
 
   //日記削除
-  public function deleteDiary($pdo, $date, $user_id)
+  public function deleteDiary($date, $user_id)
   {
 
     // DB接続
-    $pdo = $this->dbConnect("unchi", "localhost", "root", "root");
-    // $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+    $pdo = $this->dbConnect(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
     $pdo->beginTransaction();
 

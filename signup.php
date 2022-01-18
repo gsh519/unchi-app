@@ -13,7 +13,7 @@ $user = new User();
 
 if (!empty($signup)) {
 
-  $res = $user->signup($pdo, $user_name);
+  $res = $user->signup($user_name);
 
   if ($res) {
     header("Location: ./");
