@@ -13,16 +13,20 @@ $user = new User();
 
 if (!empty($signup)) {
 
-  $res = $user->signup($user_name);
+  if (empty($user_name)) {
+    $error = 'おなまえを入力してください';
+  } elseif (!empty($user_name)) {
+    $res = $user->signup($user_name);
 
-  if ($res) {
-    header("Location: ./");
-    exit;
-  } else {
-    $error = 'おなまえが他の人とかぶってます!!';
+    if ($res) {
+      header("Location: ./");
+      exit;
+    } else {
+      $error = 'おなまえが他の人とかぶってます!!';
+    }
+
+    $stmt = null;
   }
-
-  $stmt = null;
 }
 
 $pdo = null;
@@ -68,11 +72,9 @@ $pdo = null;
                                                                                       } ?>">
           </div>
           <p class="login-form__announce">※おなまえは他の人と違うものにしてください</p>
-          <?php if (!empty($errors)) : ?>
+          <?php if (!empty($error)) : ?>
             <ul class="error">
-              <?php if ($error) : ?>
-                <li class="error__message"><?php echo $error; ?></li>
-              <?php endif; ?>
+              <li class="error__message"><?php echo $error; ?></li>
             </ul>
           <?php endif; ?>
 

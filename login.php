@@ -11,16 +11,22 @@ $user_name = $_POST['user_name'];
 $user = new User();
 
 if (!empty($login)) {
-  $user_data = $user->login($user_name);
+  $user_name = htmlspecialchars($user_name, ENT_QUOTES, 'UTF-8');
+  $user_name = preg_replace('/\\r\\n|\\n|\\r/', '', $user_name);
+  if (empty($user_name)) {
+    $error = 'ユーザー名を入力してください';
+  } elseif (!empty($user_name)) {
+    $user_data = $user->login($user_name);
 
-  $_SESSION['user_name'] = $user_data['user_name'];
-  $_SESSION['user_id'] = $user_data['id'];
+    $_SESSION['user_name'] = $user_data['user_name'];
+    $_SESSION['user_id'] = $user_data['id'];
 
-  if (!empty($user_data)) {
-    header("Location: ./");
-    exit;
-  } else {
-    $error = 'おなまえが違います';
+    if (!empty($user_data)) {
+      header("Location: ./");
+      exit;
+    } else {
+      $error = 'おなまえが違います';
+    }
   }
 }
 
@@ -65,11 +71,9 @@ if (!empty($login)) {
                                                                                       } ?>">
           </div>
 
-          <?php if (!empty($errors)) : ?>
+          <?php if (!empty($error)) : ?>
             <ul class="error">
-              <?php if ($error) : ?>
-                <li class="error__message">※<?php echo $error; ?></li>
-              <?php endif; ?>
+              <li class="error__message">※<?php echo $error; ?></li>
             </ul>
           <?php endif; ?>
           <!-- ログイン -->

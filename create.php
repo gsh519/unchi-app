@@ -4,13 +4,11 @@ require_once("./user.php");
 
 session_start();
 $date = $_GET['date'];
-$errors = [];
+$status_error = $_GET['error'];
+$error = '';
 $user = new User();
 
-
-if (empty($errors)) {
-  $diary = $user->getDiary($date, $_SESSION['user_id']);
-}
+$diary = $user->getDiary($date, $_SESSION['user_id']);
 
 $amount = $diary['amount'];
 $status = $diary['status'];
@@ -95,6 +93,11 @@ $comment = $diary['comment'];
             </ul>
             <input required class="amount-input" type="hidden" name="amount">
           </div>
+          <?php if (!empty($error)) : ?>
+            <ul class="error create-error">
+              <li class="error__message">※<?php echo $error; ?></li>
+            </ul>
+          <?php endif; ?>
           <div class="wrap__area">
             <select required class="status-select" name="status" id="status">
               <option value="お腹の状態">お腹の状態</option>
